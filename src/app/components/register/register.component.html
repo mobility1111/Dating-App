@@ -1,0 +1,97 @@
+<div class="register-container">
+  <div class="register-card">
+    <form [formGroup]="registerForm" (ngSubmit)="registerForm.valid && register()" autocomplete="off">
+      <div class="form-header">
+        <h2>Create Account</h2>
+        <p class="subtitle">Find your perfect match today</p>
+      </div>
+
+      <!-- Gender Selection -->
+      <div class="form-group">
+        <label class="form-label">I am a</label>
+        <div class="gender-selector">
+          <div class="gender-option" [class.selected]="registerForm.get('gender')?.value === 'male'">
+            <input type="radio" formControlName="gender" value="male" id="male">
+            <label for="male">Male</label>
+          </div>
+          <div class="gender-option" [class.selected]="registerForm.get('gender')?.value === 'female'">
+            <input type="radio" formControlName="gender" value="female" id="female">
+            <label for="female">Female</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Fields -->
+      <div class="form-group">
+        <label class="form-label">Username</label>
+        <input type="text" formControlName="username" placeholder="Choose a username" [class.is-invalid]="registerForm.get('username')?.touched && registerForm.get('username')?.invalid" />
+        <div class="invalid-feedback">Please enter a username</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Known As</label>
+        <input type="text" formControlName="knownAs" placeholder="What should we call you?" [class.is-invalid]="registerForm.get('knownAs')?.touched && registerForm.get('knownAs')?.invalid" />
+        <div class="invalid-feedback">Please enter your display name</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Date of Birth</label>
+        <app-date-picker [formControl]="$any(registerForm.controls['dateOfBirth'])" [label]="''" [maxDate]="maxDate"></app-date-picker>
+        <div class="invalid-feedback">Date of Birth is required</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">City</label>
+        <input type="text" formControlName="city" placeholder="Your city" [class.is-invalid]="registerForm.get('city')?.touched && registerForm.get('city')?.invalid" />
+        <div class="invalid-feedback">Please enter your city</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Country</label>
+        <input type="text" formControlName="country" placeholder="Your country" [class.is-invalid]="registerForm.get('country')?.touched && registerForm.get('country')?.invalid" />
+        <div class="invalid-feedback">Please enter your country</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input type="password" formControlName="password" placeholder="Create password" [class.is-invalid]="registerForm.get('password')?.touched && registerForm.get('password')?.invalid" />
+        <div class="invalid-feedback">Password is required</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Confirm Password</label>
+        <input type="password" formControlName="confirmPassword" placeholder="Confirm password" [class.is-invalid]="registerForm.get('confirmPassword')?.touched && registerForm.get('confirmPassword')?.invalid" />
+        <div class="invalid-feedback">Passwords must match</div>
+      </div>
+
+      <!-- Terms and Conditions -->
+      <div class="form-group">
+        <label>
+          <input type="checkbox" formControlName="acceptTerms"> I accept the <a href="#">Terms and Conditions</a>
+        </label>
+        <div class="invalid-feedback" *ngIf="registerForm.get('acceptTerms')?.touched && registerForm.get('acceptTerms')?.invalid">
+          You must accept the terms and conditions
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn-register" type="submit" [disabled]="registerForm.invalid">Create Account</button>
+        <button class="btn-cancel" type="button" (click)="cancel()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+  <!-- <div class="row" *ngIf="validationErrors.length > 0">
+    <ul class="text-danger">
+        <li *ngFor="let error of validationErrors">
+            {{error}}
+        </li>
+    </ul>
+</div>
+   -->
+
+<!-- <p>Form Value: {{registerForm.value | json}}</p>
+<p>Form Value: {{registerForm.status| json}}</p> -->

@@ -1,0 +1,43 @@
+<div class="card mb-4 member-card" *ngIf="member">
+  <!-- Profile Image with Hover Effect -->
+  <div class="position-relative overflow-hidden profile-img-wrapper">
+    <img
+      [src]="member.photoUrl || './assets/user.png'"
+      [alt]="member.knownAs"
+      class="card-img-top img-fluid profile-img"
+    />
+    <!-- Icons (Hidden by Default) -->
+    <div class="profile-icons d-flex justify-content-center gap-2">
+      <div class="card mb-4 member-card" *ngIf="member && member.username">
+        <!-- Rest of your card template -->
+        <button 
+          (click)="viewProfile(member.username)"
+          class="btn btn-light text-dark shadow-sm rounded-circle icon-btn"
+          title="View Profile">
+          <i class="bi bi-person"></i>
+        </button>
+        <!-- Rest of your template -->
+      </div>
+    
+
+      <button (click)="addLike(member)" class="btn btn-light text-danger shadow-sm rounded-circle icon-btn" title="Like Profile">
+        <i class="bi bi-heart"></i>
+      </button>
+      <button 
+        routerLink="/members/{{member.username}}"
+        [queryParams]="{tab: 'Messages'}"
+        class="btn btn-light text-primary shadow-sm rounded-circle icon-btn"  title="Send Message">
+        <i class="bi bi-envelope"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Card Body -->
+  <div class="card-body text-center py-3">
+    <h5 class="card-title fw-bold mb-1">{{member.knownAs}}, {{member.age}}</h5>
+    <p class="card-text text-muted small mb-0">{{member.city}}</p>
+  </div>
+</div>
+
+
+

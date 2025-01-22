@@ -1,0 +1,305 @@
+<div class="member-edit-container py-4" *ngIf="member">
+  <!-- Header Section -->
+  <div class="row g-4 mb-4">
+    <div class="col-md-4">
+      <h1 class="display-6 fw-bold text-primary mb-0">Your Profile</h1>
+    </div>
+    <div class="col-md-8" *ngIf="editForm.dirty">
+      <div class="alert alert-warning d-flex align-items-center border-0 rounded-3">
+        <i class="bi bi-exclamation-triangle-fill me-2 fs-5"></i>
+        <div>
+          <strong>Information:</strong> You have unsaved changes that will be lost!
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <!-- Profile Card Section -->
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+        <!-- Profile Image -->
+        <div class="profile-image-container position-relative">
+          <img [src]="member.photoUrl || './assets/user.png'" 
+               [alt]="member.knownAs" 
+               class="profile-image">
+          <div class="image-overlay">
+            <button class="btn btn-light btn-sm" id="photos-tab-trigger">
+              <i class="bi bi-camera-fill me-1"></i> Change Photo
+            </button>
+          </div>
+        </div>
+
+        <!-- Profile Details -->
+        <div class="card-body">
+          <div class="profile-details">
+            <div class="detail-item">
+              <i class="bi bi-geo-alt-fill text-primary"></i>
+              <span>{{ member.city }}, {{ member.country }}</span>
+            </div>
+            <div class="detail-item">
+              <i class="bi bi-calendar3 text-primary"></i>
+              <span>{{ member.age }} years old</span>
+            </div>
+            <div class="detail-item">
+              <i class="bi bi-clock-fill text-primary"></i>
+              <span>Last active {{ member.lastActive | timeago }}</span>
+            </div>
+            <div class="detail-item">
+              <i class="bi bi-person-plus-fill text-primary"></i>
+              <span>Member since {{member.created | date: 'dd MMM yyyy'}}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Save Button -->
+        <div class="card-footer border-0 bg-white p-4">
+          <button type="submit" 
+                  form="editForm" 
+                  class="btn btn-primary w-100 py-2 rounded-3"
+                  [disabled]="!editForm.dirty">
+            <i class="bi bi-check2-circle me-2"></i>Save Changes
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Form Section -->
+    <div class="col-md-8">
+      <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-4">
+          <!-- Tabs Navigation -->
+          <ul class="nav nav-tabs border-0 mb-4" id="profileTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active custom-tab" 
+                      id="about-tab" 
+                      data-bs-toggle="tab" 
+                      data-bs-target="#about">
+                <i class="bi bi-person-fill me-2"></i>About {{ member.knownAs }}
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link custom-tab" 
+                      id="photos-tab" 
+                      data-bs-toggle="tab" 
+                      data-bs-target="#photos">
+                <i class="bi bi-images me-2"></i>Edit Photos
+              </button>
+            </li>
+          </ul>
+
+          <!-- Tabs Content -->
+          <div class="tab-content" id="profileTabsContent">
+            <!-- About Tab -->
+            <div class="tab-pane fade show active" id="about" role="tabpanel">
+              <form #editForm="ngForm" id="editForm" (ngSubmit)="updateMember()" class="profile-form">
+                <!-- Description -->
+                <div class="mb-4">
+                  <label class="form-label">
+                    <i class="bi bi-card-text me-2"></i>Description
+                  </label>
+                  <textarea class="form-control" 
+                           [(ngModel)]="member.introduction" 
+                           name="introduction" 
+                           rows="4"
+                           placeholder="Tell us about yourself..."></textarea>
+                </div>
+
+                <!-- Looking For -->
+                <div class="mb-4">
+                  <label class="form-label">
+                    <i class="bi bi-search me-2"></i>Looking For
+                  </label>
+                  <textarea class="form-control" 
+                           [(ngModel)]="member.lookingFor" 
+                           name="lookingFor" 
+                           rows="4"
+                           placeholder="What kind of person are you looking for?"></textarea>
+                </div>
+
+                <!-- Interests -->
+                <div class="mb-4">
+                  <label class="form-label">
+                    <i class="bi bi-heart-fill me-2"></i>Interests
+                  </label>
+                  <textarea class="form-control" 
+                           [(ngModel)]="member.interests" 
+                           name="interests" 
+                           rows="4"
+                           placeholder="What are your hobbies and interests?"></textarea>
+                </div>
+
+                <!-- Location -->
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label">
+                      <i class="bi bi-building me-2"></i>City
+                    </label>
+                    <input type="text" 
+                           class="form-control" 
+                           [(ngModel)]="member.city" 
+                           name="city"
+                           placeholder="Your city">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">
+                      <i class="bi bi-globe me-2"></i>Country
+                    </label>
+                    <input type="text" 
+                           class="form-control" 
+                           [(ngModel)]="member.country" 
+                           name="country"
+                           placeholder="Your country">
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <!-- Photos Tab -->
+            <div class="tab-pane fade" id="photos" role="tabpanel">
+              <app-photo-editor [member]="member"></app-photo-editor>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Container Styles */
+.member-edit-container {
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+/* Profile Image Styles */
+.profile-image-container {
+  position: relative;
+  padding-top: 100%;
+  overflow: hidden;
+}
+
+.profile-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.image-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.5rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  display: flex;
+  justify-content: center;
+}
+
+.profile-image-container:hover .image-overlay {
+  opacity: 1;
+}
+
+.profile-image-container:hover .profile-image {
+  transform: scale(1.05);
+}
+
+/* Profile Details Styles */
+.profile-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #6c757d;
+}
+
+.detail-item i {
+  font-size: 1.2rem;
+}
+
+/* Form Styles */
+.form-control {
+  border: 1px solid #dee2e6;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.form-control:focus {
+  border-color: var(--bs-primary);
+  box-shadow: 0 0 0 0.25rem rgba(13,110,253,.15);
+}
+
+.form-label {
+  font-weight: 500;
+  color: #495057;
+  margin-bottom: 0.5rem;
+}
+
+/* Custom Tab Styles */
+.custom-tab {
+  border: none !important;
+  padding: 1rem 1.5rem;
+  color: #6c757d;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.custom-tab:hover {
+  color: var(--bs-primary);
+  background-color: rgba(13,110,253,.05);
+}
+
+.custom-tab.active {
+  color: var(--bs-primary) !important;
+  background-color: rgba(13,110,253,.1) !important;
+  border-bottom: 2px solid var(--bs-primary) !important;
+}
+
+/* Alert Styles */
+.alert {
+  background-color: rgba(255, 193, 7, 0.1);
+  color: #997404;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .card {
+    margin-bottom: 1rem;
+  }
+  
+  .custom-tab {
+    padding: 0.75rem 1rem;
+  }
+  
+  .profile-image-container {
+    padding-top: 75%;
+  }
+}
+
+/* Button Styles */
+.btn-primary {
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(13,110,253,.15);
+}
+
+.btn-primary:disabled {
+  opacity: 0.7;
+}
+</style>
