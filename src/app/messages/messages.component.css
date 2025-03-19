@@ -1,0 +1,48 @@
+/* Pink Button Styling */
+.btn-pink {
+    background-color: #ff69b4; /* Pink color */
+    color: #fff;
+    border: none;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-pink:hover {
+    background-color: #ff85c4; /* Lighter pink on hover */
+    color: #fff;
+    transform: scale(1.05); /* Subtle hover effect */
+}
+
+/* Table Header Styling */
+.table-primary {
+    background-color: #ff69b4; /* Pink background for header */
+    color: #fff;
+}
+
+/* Table Row Hover */
+.table-hover tbody tr:hover {
+    background-color: #ffe4e1; /* Light pink row hover */
+}
+
+/* Image Styling */
+.img-circle {
+    border: 2px solid #ff69b4;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Empty Message Styling */
+.text-pink {
+    color: #ff69b4;
+    font-weight: bold;
+}
+
+/* Pagination Styling */
+.pagination-lg .page-link {
+    color: #ff69b4;
+    border: 1px solid #ff69b4;
+}
+
+.pagination-lg .page-link:hover {
+    background-color: #ff69b4;
+    color: #fff;
+    border-color: #ff69b4;
+}

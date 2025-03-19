@@ -1,0 +1,35 @@
+<div class="row">
+    <table class="table" *ngIf="users.length > 0; else noUsers">
+      <thead>
+        <tr>
+          <th style="width: 30%;">Username</th>
+          <th style="width: 40%;">Active roles</th>
+          <th style="width: 30%;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.username }}</td>
+          <td>
+            <span *ngIf="user?.roles?.length; else noRoles">
+              {{ user.roles?.join(', ') || 'No roles assigned' }}
+            </span>
+          </td>
+          <td>
+            <button  (click)="openRolesModal(user)"  class="btn btn-info">Edit Roles</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <!-- Template to show when there are no users -->
+  <ng-template #noUsers>
+    <p>No users found.</p>
+  </ng-template>
+  
+  <!-- Template to show when the user has no roles -->
+  <ng-template #noRoles>
+    <span class="text-muted">No roles assigned</span>
+  </ng-template>
+  

@@ -34,6 +34,15 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { TimeagoModule } from 'ngx-timeago';
 import { ListsComponent } from './lists/lists.component';
+import { MessagesComponent } from './messages/messages.component';
+import { MemberMessagesComponent } from './components/member-messages/member-messages.component';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { AdminPanelComponent } from './_admin/admin-panel/admin-panel.component';
+import { PhotoManagementComponent } from './_admin/photo-management/photo-management.component';
+import { UserManagementComponent } from './_admin/user-management/user-management.component';
+import { HasRoleDirective } from './_directives/has-role.directive';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { RolesModalComponent } from './modals/roles-modal/roles-modal.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +62,14 @@ import { ListsComponent } from './lists/lists.component';
     DatePickerComponent,
     HeaderComponent,
     HeroComponent,
-    ListsComponent
+    ListsComponent,
+    MessagesComponent,
+    MemberMessagesComponent,
+    AdminPanelComponent,
+    PhotoManagementComponent,
+    UserManagementComponent,
+    HasRoleDirective,
+    RolesModalComponent
   ],
   imports: [
     BrowserModule,
@@ -68,6 +84,8 @@ import { ListsComponent } from './lists/lists.component';
     PaginationModule.forRoot(),
     ButtonsModule.forRoot(),
     TimeagoModule.forRoot(),
+    TabsModule.forRoot(),
+    ModalModule.forRoot(),
    
     
     BsDatepickerModule.forRoot(),

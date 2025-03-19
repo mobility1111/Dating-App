@@ -11,7 +11,10 @@ import { ServerErrorComponent } from './errors/server-error/server-error.compone
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { PreventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
-import { HeroComponent } from './components/hero/hero.component';
+import { MemberDetailedResolver } from './_resolvers/member-detailed.resolver';
+import { AdminPanelComponent } from './_admin/admin-panel/admin-panel.component';
+import { AdminGuard } from './_guards/admin.guard';
+
 
 
 const routes: Routes = [
@@ -22,10 +25,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       { path: 'members', component: MemberListComponent },
-      { path: 'members/:username', component: MemberDetailComponent },
+      { path: 'members/:username', component: MemberDetailComponent, resolve: { member: MemberDetailedResolver } },
       {path: 'member/edit', component: MemberEditComponent, canDeactivate: [PreventUnsavedChangesGuard]},
       { path: 'lists', component: ListsComponent },
       { path: 'messages', component: MessagesComponent },
+       {path: 'admin', component: AdminPanelComponent, canActivate: [AdminGuard]},
     ]
   },
   {path: 'errors', component: TestErrorsComponent},

@@ -26,6 +26,9 @@
               <li class="nav-item">
                 <a class="nav-link" routerLink="/messages" routerLinkActive="active">Messages</a>
               </li>
+              <li *appHasRole='["Admin", "Moderator"]" class="nav-item'>
+                <a class="nav-link" routerLink="/admin" routerLinkActive="active">Admin</a>
+              </li>
               <li class="nav-item">
                 <a class="nav-link" routerLink="/admin" (click)="logout()">Logout</a>
               </li>
@@ -37,11 +40,13 @@
   
           <!-- Dropdown for logged-in users -->
           <div class="dropdown" *ngIf="(accountService.currentUser$ | async) as user">
-            <img src="{{user.photoUrl}}" alt="{{user.username}}">
-            <a class="btn btn-secondary dropdown-toggle text-light" id="userDropdown" 
-               role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Welcome, {{user.knownAs| titlecase}}
-            </a>
+            <div class="d-flex align-items-center">
+              <img src="{{user.photoUrl || './assets/user.png'}}" alt="{{user.username}}">
+              <a class="btn btn-secondary dropdown-toggle text-light" id="userDropdown" 
+                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Welcome, {{user.knownAs || user.username | titlecase}}
+              </a>
+            </div>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
               <li><a class="dropdown-item" routerLink="/member/edit">Edit Profile</a></li>
               <li><a class="dropdown-item" (click)="logout()">Logout</a></li>

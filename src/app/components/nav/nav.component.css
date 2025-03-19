@@ -79,3 +79,26 @@ header {
       margin-top: 10px;
     }
   }
+
+  /* Add this to your existing CSS */
+.dropdown img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 8px;
+  border: 2px solid #e91e63;
+}
+
+/* Adjust the dropdown display */
+.dropdown {
+  display: flex;
+  align-items: center;
+}
+
+/* Make the dropdown button more compact */
+.dropdown .btn-secondary {
+  padding: 6px 12px;
+  display: inline-flex;
+  align-items: center;
+}

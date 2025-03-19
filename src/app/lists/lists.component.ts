@@ -9,9 +9,11 @@ import { MembersService } from '../_services/members.service';
   styleUrls: ['./lists.component.css']
 })
 export class ListsComponent implements OnInit {
-  members: Partial<Member[]> = [];
+  members: Member[] | undefined;
   predicate = 'liked';
-
+  pageNumber = 1;
+  pageSize = 2;
+  pagination: Pagination | undefined;
 
   constructor(private memberService: MembersService) { }
 
@@ -20,10 +22,21 @@ export class ListsComponent implements OnInit {
   }
 
   loadLikes() {
-    this.memberService.getLikes(this.predicate).subscribe(response => {
-     this.members = response;
-    })
+    this.memberService.getLikes(this.predicate, this.pageNumber, this.pageSize).subscribe({
+      next: response => {
+        // Filter undefined values, if necessary
+        this.members = response.result?.filter((member): member is Member => member !== undefined);
+        this.pagination = response.pagination;
+      }
+    });
   }
+  
 
+  pageChanged(event: any) {
+    if (this.pageNumber !== event.page) {
+      this.pageNumber = event.page;
+      this.loadLikes();
+    }
+  }
 
 }
